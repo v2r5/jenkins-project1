@@ -1,0 +1,37 @@
+#Tested on Ubuntu 22.04
+
+#!/bin/bash
+
+# Repository https://pkg.jenkins.io/debian-stable/
+# Check for userdata execution log cat /var/log/cloud-init-output.log
+# Use Ubuntu 22
+
+echo "Step 1 ---------------------------------------"
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+echo "Step 2 ---------------------------------------"
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+echo "Step 3 ---------------------------------------"
+  sudo apt-get update
+
+echo "Step 4 ---------------------------------------"
+  sudo apt-get install -y fontconfig openjdk-17-jre
+
+echo "Step 5 ---------------------------------------"
+  sudo apt-get install -y jenkins
+  sudo apt install -y git
+ 
+#https://tecadmin.net/how-to-install-terraform-on-ubuntu/
+  sudo apt update 
+  sudo apt upgrade 
+
+sudo apt install curl software-properties-common
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg 
+
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list 
+
+sudo apt update && sudo apt install terraform 
